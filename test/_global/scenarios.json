@@ -1,0 +1,8 @@
+{
+    "dokku-cli": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "features": {
+            "dokku-cli": {}
+        }
+    }
+}
