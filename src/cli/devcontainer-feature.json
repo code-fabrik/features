@@ -1,6 +1,6 @@
 {
     "name": "Dokku Remote CLI",
-    "id": "dokku",
+    "id": "cli",
     "version": "1.0.0",
     "description": "A feature to run remote dokku commands",
     "options": {},
