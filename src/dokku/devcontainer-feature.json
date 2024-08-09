@@ -1,0 +1,10 @@
+{
+    "name": "Dokku Remote CLI",
+    "id": "dokku",
+    "version": "1.0.0",
+    "description": "A feature to run remote dokku commands",
+    "options": {},
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}

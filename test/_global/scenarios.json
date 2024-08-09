@@ -1,0 +1,10 @@
+{
+    "dokku": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "features": {
+            "dokku": {
+                "a": 5
+            }
+        }
+    }
+}
