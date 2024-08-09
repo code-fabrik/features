@@ -1,18 +1,24 @@
 
-# Dokku CLI
+# Dokku Remote CLI (dokku-cli)
 
-A feature to run Dokku remote commands
+A feature to run remote dokku commands
 
 ## Example Usage
 
 ```json
 "features": {
-    "ghcr.io/code-fabrik/devcontainer-features/dokku-cli:1": {
-        "version": "latest"
-    }
+    "ghcr.io/code-fabrik/devcontainer-dokku/dokku-cli:1": {}
 }
 ```
 
+## Options
+
+| Options Id | Description | Type | Default Value |
+|-----|-----|-----|-----|
+
+
+
+
 ---
 
-_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/devcontainers/feature-starter/blob/main/src/color/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/code-fabrik/devcontainer-dokku/blob/main/src/dokku-cli/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
