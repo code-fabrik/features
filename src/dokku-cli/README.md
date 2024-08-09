@@ -7,7 +7,7 @@ A feature to run Dokku remote commands
 
 ```json
 "features": {
-    "ghcr.io/devcontainers/code-fabrik/dokku:1": {
+    "ghcr.io/code-fabrik/devcontainer-features/dokku-cli:1": {
         "version": "latest"
     }
 }

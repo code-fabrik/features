@@ -22,10 +22,7 @@ echo -e "\n"
 
 # Feature-specific tests
 # The 'check' command comes from the dev-container-features-test-lib.
-OUTPUT="$(dokku 2>&1)"
-echo bash -c "grep 'Configure the DOKKU_HOST environment variable' <<< \"$OUTPUT\""
-sleep 10
-check "check dokku command runs" bash -c "grep 'Configure the DOKKU_HOST environment variable' <<< \"$OUTPUT\""
+check "check dokku command runs" dokku
 
 # Report result
 # If any of the checks above exited with a non-zero exit code, the test will fail.
