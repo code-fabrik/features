@@ -27,7 +27,12 @@ source dev-container-features-test-lib
 
 # Feature-specific tests
 # The 'check' command comes from the dev-container-features-test-lib.
-check "version" dokku
+
+check "check dokku command runs" dokku
+check "version" dokku -v
+echo -e "The result of the 'dokku' command will be:\n"
+dokku
+echo -e "\n"
 
 # Report result
 # If any of the checks above exited with a non-zero exit code, the test will fail.
