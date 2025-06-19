@@ -1,0 +1,23 @@
+{
+    "name": "MetaMCP",
+    "id": "meta-mcp",
+    "version": "1.0.0",
+    "description": "A feature to add the MetaMCP proxy",
+    "options": {
+        "metamcpApiKey": {
+            "type": "string",
+            "proposals": [""],
+            "default": "",
+            "description": "API Key for MetaMCP."
+        },
+        "metamcpApiUrl": {
+            "type": "string",
+            "proposals": ["http://host.docker.internal:12005"],
+            "default": "host.docker.internal:12005",
+            "description": "API URL for MetaMCP."
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
