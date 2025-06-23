@@ -14,7 +14,7 @@
     "mounts": [
         {
             "source": "${localEnv:HOME}/.claude/config.json",
-            "target": "${userHome}/.claude/config.json",
+            "target": "$HOME/.claude/config.json",
             "type": "bind"
         }
     ]
