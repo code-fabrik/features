@@ -14,7 +14,7 @@
     "mounts": [
         {
             "source": "${localEnv:HOME}/.claude/config.json",
-            "target": "$HOME/.claude/config.json",
+            "target": "/home/vscode/.claude/config.json",
             "type": "bind"
         }
     ]
