@@ -1,0 +1,10 @@
+{
+    "name": "osm2pgsql",
+    "id": "osm2pgsql",
+    "version": "1.0.0",
+    "description": "osm2pgsql binary",
+    "options": {},
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
