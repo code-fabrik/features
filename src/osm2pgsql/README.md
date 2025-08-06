@@ -1,13 +1,13 @@
 
-# Dokku Remote CLI (dokku-cli)
+# osm2pgsql (osm2pgsql)
 
-A feature to run remote dokku commands
+osm2pgsql binary
 
 ## Example Usage
 
 ```json
 "features": {
-    "ghcr.io/code-fabrik/features/dokku-cli:1": {}
+    "ghcr.io/code-fabrik/features/osm2pgsql:1": {}
 }
 ```
 
@@ -21,4 +21,4 @@ A feature to run remote dokku commands
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/code-fabrik/features/blob/main/src/dokku-cli/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/code-fabrik/features/blob/main/src/osm2pgsql/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
