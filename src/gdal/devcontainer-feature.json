@@ -1,7 +1,7 @@
 {
     "name": "gdal",
     "id": "gdal",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "gdal binary",
     "options": {},
     "installsAfter": [
