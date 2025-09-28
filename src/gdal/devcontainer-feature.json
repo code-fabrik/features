@@ -1,0 +1,10 @@
+{
+    "name": "gdal",
+    "id": "gdal",
+    "version": "1.0.0",
+    "description": "gdal binary",
+    "options": {},
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
