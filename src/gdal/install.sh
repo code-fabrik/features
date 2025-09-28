@@ -7,4 +7,4 @@ echo "Activating feature 'gdal'"
 
 apt-get update
 
-apt-get install -y gdal-bin
+apt-get install -y gdal-bin libgdal-dev
