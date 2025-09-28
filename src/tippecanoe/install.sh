@@ -11,6 +11,6 @@ apt-get install -y build-essential libsqlite3-dev zlib1g-dev git
 
 git clone https://github.com/felt/tippecanoe.git
 
-RUN cd tippecanoe && make -j && make install
+cd tippecanoe && make -j && make install
 
 rm -rf tippecanoe

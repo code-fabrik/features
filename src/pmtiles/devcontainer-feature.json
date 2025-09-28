@@ -1,0 +1,10 @@
+{
+    "name": "pmtiles",
+    "id": "pmtiles",
+    "version": "1.0.0",
+    "description": "pmtiles binary",
+    "options": {},
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
