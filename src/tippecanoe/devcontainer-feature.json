@@ -1,0 +1,10 @@
+{
+    "name": "tippecanoe",
+    "id": "tippecanoe",
+    "version": "1.0.0",
+    "description": "tippecanoe binary",
+    "options": {},
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
