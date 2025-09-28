@@ -7,4 +7,11 @@ echo "Activating feature 'gdal'"
 
 apt-get update
 
-apt-get install -y gdal-bin libgdal-dev
+wget -O /tmp/libgdal-dev.deb http://ftp.ch.debian.org/debian/pool/main/g/gdal/libgdal-dev_3.6.2+dfsg-1+b2_amd64.deb
+wget -O /tmp/gdal-bin.deb http://ftp.ch.debian.org/debian/pool/main/g/gdal/gdal-bin_3.6.2+dfsg-1+b2_amd64.deb
+
+dpkg -i /tmp/libgdal-dev.deb
+dpkg -i /tmp/gdal-bin.deb
+
+rm /tmp/libgdal-dev.deb
+rm /tmp/gdal-bin.deb
