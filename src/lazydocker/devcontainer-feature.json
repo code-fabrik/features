@@ -1,0 +1,15 @@
+{
+    "name": "lazydocker",
+    "id": "lazydocker",
+    "version": "1.0.3",
+    "description": "lazydocker binary",
+    "options": {
+        "version": {
+            "type": "string",
+            "default": "0.24.1"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
