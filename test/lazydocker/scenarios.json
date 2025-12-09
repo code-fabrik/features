@@ -1,0 +1,24 @@
+{
+    "test_default": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "lazydocker": {}
+        }
+    },
+    "test_with_version": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "lazydocker": {
+                "version": "0.24.2"
+            }
+        }
+    },
+    "test_on_ubuntu": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "features": {
+            "lazydocker": {
+                "version": "0.24.2"
+            }
+        }
+    }
+}
