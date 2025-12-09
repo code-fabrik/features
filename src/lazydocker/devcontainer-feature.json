@@ -1,12 +1,13 @@
 {
     "name": "lazydocker",
     "id": "lazydocker",
-    "version": "1.0.3",
-    "description": "lazydocker binary",
+    "version": "1.0.4",
+    "description": "A simple terminal UI for both docker and docker-compose",
     "options": {
         "version": {
             "type": "string",
-            "default": "0.24.1"
+            "default": "0.24.2",
+            "description": "Version of lazydocker to install"
         }
     },
     "installsAfter": [
