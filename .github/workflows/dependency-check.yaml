@@ -1,0 +1,173 @@
+name: "Check for Dependency Updates"
+
+on:
+  schedule:
+    # Run every Monday at 09:00 UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+jobs:
+  check-lazydocker:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Check for new lazydocker release
+        id: check_release
+        run: |
+          # Get current version from devcontainer-feature.json
+          CURRENT_VERSION=$(jq -r '.options.version.default' src/lazydocker/devcontainer-feature.json)
+          echo "Current version: $CURRENT_VERSION"
+          
+          # Get latest release from GitHub API
+          LATEST_VERSION=$(curl -s https://api.github.com/repos/jesseduffield/lazydocker/releases/latest | jq -r '.tag_name' | sed 's/^v//')
+          echo "Latest version: $LATEST_VERSION"
+          
+          # Compare versions
+          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
+            echo "new_version_available=true" >> $GITHUB_OUTPUT
+            echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+            echo "latest_version=$LATEST_VERSION" >> $GITHUB_OUTPUT
+            echo "::notice::New lazydocker version available: $LATEST_VERSION (current: $CURRENT_VERSION)"
+          else
+            echo "new_version_available=false" >> $GITHUB_OUTPUT
+            echo "::notice::lazydocker is up to date: $CURRENT_VERSION"
+          fi
+
+      - name: Get release notes
+        if: steps.check_release.outputs.new_version_available == 'true'
+        id: release_notes
+        run: |
+          RELEASE_NOTES=$(curl -s https://api.github.com/repos/jesseduffield/lazydocker/releases/latest | jq -r '.body')
+          # Escape for GitHub output
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$RELEASE_NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create issue for new version
+        if: steps.check_release.outputs.new_version_available == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const currentVersion = '${{ steps.check_release.outputs.current_version }}';
+            const latestVersion = '${{ steps.check_release.outputs.latest_version }}';
+            const releaseNotes = `${{ steps.release_notes.outputs.notes }}`;
+            
+            const issueTitle = `Update lazydocker to v${latestVersion}`;
+            const issueBody = `## New lazydocker Release Available
+            
+            A new version of lazydocker has been released!
+            
+            **Current version:** ${currentVersion}  
+            **Latest version:** ${latestVersion}  
+            **Release page:** https://github.com/jesseduffield/lazydocker/releases/tag/v${latestVersion}
+            
+            ## Release Notes
+            
+            ${releaseNotes}
+            
+            ## Update Checklist
+            
+            - [ ] Review release notes for breaking changes
+            - [ ] Update \`src/lazydocker/devcontainer-feature.json\` (default version)
+            - [ ] Update \`src/lazydocker/install.sh\` (VERSION default)
+            - [ ] Run local tests: \`devcontainer features test -f lazydocker .\`
+            - [ ] Test on multiple base images (debian, ubuntu)
+            - [ ] Verify all architectures are supported (x86_64, arm64, armv6, armv7, x86)
+            - [ ] Update feature version (bump patch/minor in devcontainer-feature.json)
+            - [ ] Update CHANGELOG (if exists)
+            - [ ] Create PR with test results
+            
+            ## Files to Update
+            
+            1. \`src/lazydocker/devcontainer-feature.json\`
+               \`\`\`json
+               "version": {
+                 "default": "${latestVersion}"
+               }
+               \`\`\`
+            
+            2. \`src/lazydocker/install.sh\`
+               \`\`\`bash
+               VERSION="\${VERSION:-"${latestVersion}"}"
+               \`\`\`
+            
+            3. \`src/lazydocker/devcontainer-feature.json\` (feature version)
+               \`\`\`json
+               "version": "1.0.5"  // or appropriate bump
+               \`\`\`
+            
+            ## Testing Commands
+            
+            \`\`\`bash
+            # Test with new version
+            cd /path/to/features
+            devcontainer features test -f lazydocker .
+            
+            # Test on specific base images
+            devcontainer features test -f lazydocker -i debian:latest .
+            devcontainer features test -f lazydocker -i ubuntu:latest .
+            \`\`\`
+            
+            ---
+            
+            This issue was automatically created by the dependency check workflow.
+            `;
+            
+            // Check if issue already exists
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'dependencies,lazydocker'
+            });
+            
+            const existingIssue = issues.data.find(issue => 
+              issue.title.includes(`Update lazydocker to v${latestVersion}`)
+            );
+            
+            if (existingIssue) {
+              console.log(`Issue already exists: #${existingIssue.number}`);
+            } else {
+              const issue = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: issueTitle,
+                body: issueBody,
+                labels: ['dependencies', 'lazydocker', 'automated']
+              });
+              console.log(`Created issue: #${issue.data.number}`);
+            }
+
+  check-devcontainer-cli:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Check for new devcontainer CLI release
+        id: check_cli
+        run: |
+          # Get latest release from npm
+          LATEST_VERSION=$(npm view @devcontainers/cli version)
+          echo "Latest @devcontainers/cli version: $LATEST_VERSION"
+          echo "latest_version=$LATEST_VERSION" >> $GITHUB_OUTPUT
+          
+          # Note: We don't have a pinned version to compare against
+          # This just logs the latest version for manual review
+          echo "::notice::Latest @devcontainers/cli version: $LATEST_VERSION"
+
+      - name: Comment on workflow run
+        run: |
+          echo "## Dependency Check Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### @devcontainers/cli" >> $GITHUB_STEP_SUMMARY
+          echo "Latest version: ${{ steps.check_cli.outputs.latest_version }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Review the [devcontainers/cli releases](https://github.com/devcontainers/cli/releases) for updates." >> $GITHUB_STEP_SUMMARY
+
